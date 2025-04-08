@@ -51,226 +51,237 @@ class _CardExchangePageState extends State<CardExchangePage> {
         isDarkMode: themeManager.isDarkMode,
         toggleTheme: themeManager.toggleTheme,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: isDarkMode
-                ? [
-                    PokemonColors.backgroundDark,
-                    PokemonColors.backgroundDark.withOpacity(0.8),
-                  ]
-                : [
-                    PokemonColors.backgroundLight,
-                    Colors.white,
-                  ],
+      body: GestureDetector(
+        onTap: () {
+          // 빈 공간 탭시 키보드 닫기
+          FocusScope.of(context).unfocus();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: isDarkMode
+                  ? [
+                      PokemonColors.backgroundDark,
+                      PokemonColors.backgroundDark.withOpacity(0.8),
+                    ]
+                  : [
+                      PokemonColors.backgroundLight,
+                      Colors.white,
+                    ],
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 24),
-              // 타이틀 섹션
-              Center(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? PokemonColors.primaryBlue.withOpacity(0.2)
-                        : PokemonColors.primaryRed.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isDarkMode
-                          ? PokemonColors.primaryBlue.withOpacity(0.3)
-                          : PokemonColors.primaryRed.withOpacity(0.3),
-                      width: 2,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TweenAnimationBuilder<double>(
-                        duration: const Duration(milliseconds: 700),
-                        tween: Tween<double>(begin: 0, end: 2 * math.pi),
-                        builder: (context, value, child) {
-                          return Transform.rotate(
-                            angle: math.sin(value) * 0.05,
-                            child: child,
-                          );
-                        },
-                        child: Icon(
-                          Icons.sync_alt_rounded,
-                          size: 28,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 24),
+                  // 타이틀 섹션
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: isDarkMode
+                            ? PokemonColors.primaryBlue.withOpacity(0.2)
+                            : PokemonColors.primaryRed.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
                           color: isDarkMode
-                              ? PokemonColors.primaryYellow
-                              : PokemonColors.primaryRed,
+                              ? PokemonColors.primaryBlue.withOpacity(0.3)
+                              : PokemonColors.primaryRed.withOpacity(0.3),
+                          width: 2,
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        '카드 교환하기',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TweenAnimationBuilder<double>(
+                            duration: const Duration(milliseconds: 700),
+                            tween: Tween<double>(begin: 0, end: 2 * math.pi),
+                            builder: (context, value, child) {
+                              return Transform.rotate(
+                                angle: math.sin(value) * 0.05,
+                                child: child,
+                              );
+                            },
+                            child: Icon(
+                              Icons.sync_alt_rounded,
+                              size: 28,
+                              color: isDarkMode
+                                  ? PokemonColors.primaryYellow
+                                  : PokemonColors.primaryRed,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            '카드 교환하기',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: isDarkMode ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // 정보 입력 섹션
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? PokemonColors.cardDark
-                        : PokemonColors.cardLight,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        spreadRadius: 0,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                    border: Border.all(
-                      color: isDarkMode
-                          ? PokemonColors.primaryBlue.withOpacity(0.2)
-                          : PokemonColors.primaryRed.withOpacity(0.2),
-                      width: 2,
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // 닉네임 입력
-                      _buildTextField(
-                        controller: _nameController,
-                        labelText: '닉네임',
-                        hintText: '닉네임을 입력하세요',
-                        icon: Icons.person_outline_rounded,
-                        isDarkMode: isDarkMode,
-                        onChanged: (value) {
-                          setState(() {});
-                        },
+                  const SizedBox(height: 24),
+
+                  // 정보 입력 섹션
+                  Container(
+                    height: MediaQuery.of(context).size.height - 300,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: isDarkMode
+                          ? PokemonColors.cardDark
+                          : PokemonColors.cardLight,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: isDarkMode
+                            ? PokemonColors.primaryBlue.withOpacity(0.2)
+                            : PokemonColors.primaryRed.withOpacity(0.2),
+                        width: 2,
                       ),
-                      const SizedBox(height: 24),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 닉네임 입력
+                        _buildTextField(
+                          controller: _nameController,
+                          labelText: '닉네임',
+                          hintText: '닉네임을 입력하세요',
+                          icon: Icons.person_outline_rounded,
+                          isDarkMode: isDarkMode,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(height: 24),
 
-                      // 원하는 카드 선택
-                      _buildCardSelectionField(
-                        labelText: '원하는 카드',
-                        cards: selectedDesiredCards,
-                        onTap: () async {
-                          final selectedCardList =
-                              await Navigator.push<List<String>>(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SelectCardPage()),
-                          );
+                        // 원하는 카드 선택
+                        _buildCardSelectionField(
+                          labelText: '원하는 카드',
+                          cards: selectedDesiredCards,
+                          onTap: () async {
+                            // 선택시 먼저 키보드 닫기
+                            FocusScope.of(context).unfocus();
+                            final selectedCardList =
+                                await Navigator.push<List<String>>(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SelectCardPage()),
+                            );
 
-                          if (selectedCardList != null) {
-                            setState(() {
-                              selectedDesiredCards.addAll(
-                                  selectedCardList.where((card) =>
-                                      !selectedDesiredCards.contains(card)));
-                            });
-                          }
-                        },
-                        isDarkMode: isDarkMode,
-                        icon: Icons.card_giftcard_rounded,
-                      ),
-                      const SizedBox(height: 24),
+                            if (selectedCardList != null) {
+                              setState(() {
+                                selectedDesiredCards.addAll(
+                                    selectedCardList.where((card) =>
+                                        !selectedDesiredCards.contains(card)));
+                              });
+                            }
+                          },
+                          isDarkMode: isDarkMode,
+                          icon: Icons.card_giftcard_rounded,
+                        ),
+                        const SizedBox(height: 24),
 
-                      // 보유 카드 선택
-                      _buildCardSelectionField(
-                        labelText: '보유카드',
-                        cards: selectedOwnedCards,
-                        onTap: () async {
-                          final selectedCardList =
-                              await Navigator.push<List<String>>(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SelectCardPage()),
-                          );
+                        // 보유 카드 선택
+                        _buildCardSelectionField(
+                          labelText: '보유카드',
+                          cards: selectedOwnedCards,
+                          onTap: () async {
+                            // 선택시 먼저 키보드 닫기
+                            FocusScope.of(context).unfocus();
+                            final selectedCardList =
+                                await Navigator.push<List<String>>(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SelectCardPage()),
+                            );
 
-                          if (selectedCardList != null) {
-                            setState(() {
-                              selectedOwnedCards.addAll(selectedCardList.where(
-                                  (card) =>
-                                      !selectedOwnedCards.contains(card)));
-                            });
-                          }
-                        },
-                        isDarkMode: isDarkMode,
-                        icon: Icons.style_rounded,
-                      ),
+                            if (selectedCardList != null) {
+                              setState(() {
+                                selectedOwnedCards.addAll(
+                                    selectedCardList.where((card) =>
+                                        !selectedOwnedCards.contains(card)));
+                              });
+                            }
+                          },
+                          isDarkMode: isDarkMode,
+                          icon: Icons.style_rounded,
+                        ),
 
-                      const Spacer(),
+                        const Spacer(),
 
-                      // 등록 버튼
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _nameController.text.isNotEmpty &&
-                                  selectedDesiredCards.isNotEmpty &&
-                                  selectedOwnedCards.isNotEmpty
-                              ? () {
-                                  Navigator.pop(context, {
-                                    'userName': _nameController.text,
-                                    'desiredCards': selectedDesiredCards,
-                                    'ownedCards': selectedOwnedCards,
-                                  });
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isDarkMode
-                                ? PokemonColors.primaryBlue
-                                : PokemonColors.primaryYellow,
-                            foregroundColor:
-                                isDarkMode ? Colors.white : Colors.black,
-                            elevation: 3,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                        // 등록 버튼
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _nameController.text.isNotEmpty &&
+                                    selectedDesiredCards.isNotEmpty &&
+                                    selectedOwnedCards.isNotEmpty
+                                ? () {
+                                    Navigator.pop(context, {
+                                      'userName': _nameController.text,
+                                      'desiredCards': selectedDesiredCards,
+                                      'ownedCards': selectedOwnedCards,
+                                    });
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isDarkMode
+                                  ? PokemonColors.primaryBlue
+                                  : PokemonColors.primaryYellow,
+                              foregroundColor:
+                                  isDarkMode ? Colors.white : Colors.black,
+                              elevation: 3,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              disabledBackgroundColor: isDarkMode
+                                  ? Colors.grey[800]
+                                  : Colors.grey[300],
+                              disabledForegroundColor: isDarkMode
+                                  ? Colors.grey[600]
+                                  : Colors.grey[500],
                             ),
-                            disabledBackgroundColor: isDarkMode
-                                ? Colors.grey[800]
-                                : Colors.grey[300],
-                            disabledForegroundColor: isDarkMode
-                                ? Colors.grey[600]
-                                : Colors.grey[500],
-                          ),
-                          child: Text(
-                            '등록하기',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: _nameController.text.isNotEmpty &&
-                                      selectedDesiredCards.isNotEmpty &&
-                                      selectedOwnedCards.isNotEmpty
-                                  ? (isDarkMode ? Colors.white : Colors.black)
-                                  : (isDarkMode
-                                      ? Colors.grey[600]
-                                      : Colors.grey[500]),
+                            child: Text(
+                              '등록하기',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: _nameController.text.isNotEmpty &&
+                                        selectedDesiredCards.isNotEmpty &&
+                                        selectedOwnedCards.isNotEmpty
+                                    ? (isDarkMode ? Colors.white : Colors.black)
+                                    : (isDarkMode
+                                        ? Colors.grey[600]
+                                        : Colors.grey[500]),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 24),
+                ],
               ),
-              const SizedBox(height: 24),
-            ],
+            ),
           ),
         ),
       ),
